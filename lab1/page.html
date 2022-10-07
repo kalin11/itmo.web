@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lab №1</title>
+    <script defer src = "js/script.js"></script>
+</head>
+<body>
+<style>
+    /*селектор элементов*/
+    *{
+        font-family: Candara,fantasy;
+    }
+    body{
+        height: 100vh;
+        align-items: center;
+        background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    }
+    /*селектор потомств*/
+    input, select{
+        border: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: #f2f2f2;
+        font-size: 15px;
+        padding: 12px;
+        border-radius: 3px;
+        outline: none;
+    }
+
+</style>
+    <h1>
+        <style>
+            h1{
+                text-align: center;
+                color: #000000;
+                font-size: 50px;
+                font-family: cursive;
+            }
+            h1::first-letter{
+                color: #FE6262;
+            }
+        </style>
+        Лысенко Артём Константинович, P32312, вариант 3010
+    </h1>
+    <section>
+    <form class = "js-form" id = "form" action="test.php" method="POST">
+        <table id = 'myTable'>
+            <style>
+                table{
+                    width: 100%;
+                    height: 150px;
+                    max-width: 1024px;
+                    margin: auto;
+                    background-color: aliceblue;
+                    text-align: center;
+                }
+            </style>
+            <tbody>
+            <tr>
+                <td>Выберите у
+                <input type="text" class = "js-input" id = "y" name = "yCoord" maxlength="4" placeholder="введите значение [-5;3]" oninput="validation()" required>
+                    <style>
+                        /*селектор псевдоэлемента*/
+                        .js-input::placeholder{
+                            font-style: italic;
+                        }
+                    </style>
+                    <script type="text/javascript">
+                        function validation(){
+                            let input = document.querySelector(".js-input");
+                            let y = input.value;
+                            let regex = "^(\\-|\\+)?\\d+(\\,|.\\d+)?$";
+
+                            if (y === ''){
+                                input.style.background = "";
+                            }
+                            else {
+                                if (!y.match(regex)) {
+                                    input.style.background = "#FE6262";
+                                } else {
+                                    input.style.background = "#F2F2F2";
+                                }
+                            }
+                        }
+                    </script>
+
+                </td>
+                <td>Выберите х
+                    <select name = "xCoord">
+                        <option value="-4">-4</option>
+                        <option value="-3">-3</option>
+                        <option value="-2">-2</option>
+                        <option value="-1">-1</option>
+                        <option value="0">&nbsp0</option>
+                        <option value="1">&nbsp1</option>
+                        <option value="2">&nbsp2</option>
+                        <option value="3">&nbsp3</option>
+                        <option value="4">&nbsp4</option>
+                    </select>
+                </td>
+                <td>Выберите радиус
+                <select class = "radius" name = "Radius" id = "radius" >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                </select>
+            </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <input class = "submit" type="submit" id = "submit" name = "submitButton" placeholder="Отправить" formtarget="_blank">
+                    <style>
+                        /*селектор псевдоклассов*/
+                        .submit:hover{
+                            background-color: #b3ff6b;
+                            transition: .7s;
+                        }
+
+
+                    </style>
+                    <input class = "reset" type="reset" id = "reset" name = "resetButton" placeholder="Сбросить">
+                    <style>
+                        .reset:hover{
+                            background-color: #FE6262;
+                            transition: .7s;
+                        }
+                    </style>
+                </td>
+            </tr>
+
+            </tbody>
+            <tr>
+                <td style="line-height: 100px;"  colspan = 3>&nbsp</td>
+            </tr>
+
+            <tr>
+                <td style = "font-size: 30px; text-align: center" colspan="3">График</td>
+            </tr>
+
+            <tr>
+                <td style="line-height: 80px;"  colspan = 3>&nbsp</td>
+            </tr>
+
+            <tr>
+                <td colspan="3" >
+                    <canvas id = "canvas" width="400" height="400">
+                        <script src = "js/graph.js"></script>
+                    </canvas>
+                </td>
+
+            </tr>
+    </table>
+    </form>
+    </section>
+    </body>
+</html>
