@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>lab 3</title>
+    <h:outputStylesheet library="css" name="header.css"/>
+    <h:outputScript library="js" name="graph.js" />
+    <h:outputStylesheet library="css" name="clock.css"/>
+    <h:outputStylesheet library="css" name="welcomePage.css"/>
+</h:head>
+<h:body>
+    <div id="headInfo">
+        <h1>Лысенко Артём Константинович, вариант 3231221, группа P32312</h1>
+    </div>
+
+    <div class = "clock">
+        <div class="hour">
+            <div class="hr" id="hr"></div>
+        </div>
+        <div class="min">
+            <div class="mn" id="mn"></div>
+        </div>
+        <div class="sec">
+            <div class="sc" id="sc"></div>
+        </div>
+    </div>
+
+    <div class="date" id="date"></div>
+    <h:form id="form">
+        <div class="user" id="userInfo">
+            <h:inputText placeholder="введите своё имя" type="text" id="username" name="usename" class="username" value="#{user.name}" required="true"/>
+            <h:commandButton id="submitButton" value="Перейти на главную страницу" action="main"/>
+        </div>
+    </h:form>
+
+    <script type="text/javascript">
+        const period = 1;
+        function displayTime() {
+            const deg = 6;
+
+            let date = new Date();
+
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            if (day.length === 1) day = "0" + day;
+            if (month.length === 1) month = "0"+month;
+            document.getElementById("date").innerHTML = day + "." + month + "." + date.getFullYear();
+
+            let hr = document.getElementById("hr");
+            let mn = document.getElementById("mn");
+            let sc = document.getElementById("sc");
+
+
+            let hh = date.getHours() * 30;
+            let mm = date.getMinutes() * deg;
+            let ss = date.getSeconds() * deg;
+            let a = (hh + mm / 12);
+
+
+            hr.style.transform = 'rotateZ(' + a + 'deg)';
+            mn.style.transform = 'rotateZ(' + mm + 'deg)';
+            sc.style.transform = 'rotateZ(' + ss + 'deg)';
+        }
+        setInterval(displayTime, period * 1000);
+
+    </script>
+    <script type="text/javascript">
+        let date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        if (day.length === 1) day = "0" + day;
+        if (month.length === 1) month = "0"+month;
+        document.getElementById("date").innerHTML = day + "." + month + "." + date.getFullYear();
+    </script>
+
+</h:body>
+</html>

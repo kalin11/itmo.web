@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>lab 3</title>
+    <h:outputStylesheet library="css" name="main.css"/>
+</h:head>
+<h:body onload="drawGraph(1); getOffset();">
+    <div>
+        <h1>
+            Hello, #{user.name}!
+        </h1>
+    </div>
+    <div class="menu">
+    <div class="frame" style="float:left; width: 50%; height: 100%">
+        <h:outputStylesheet library="css" name="table.css"/>
+        <h:form id="mainForm">
+            <table id="myTable">
+                <tbody>
+                <tr>
+                    <td>
+                        <div>
+                            <p>Выберите Х</p>
+                        </div>
+                        <div>
+                            <h:inputText name="xCoord" id="xInput" pt:placeholder="введите значение (-3;5)" oninput="validation();" styleClass="js-input" maxlength="4" value="#{shot.x}" required="true" validatorMessage="х должен быть в диапазоне (-3;5)">
+                                <f:validateDoubleRange minimum="-2.999" maximum="4.999"/>
+                                <f:ajax execute="@this" event="keyup" render="Xerrors"/>
+                            </h:inputText>
+                            <script type="text/javascript">
+                                function validation(){
+                                    let input = document.querySelector(".js-input");
+                                    let y = input.value;
+                                    let regex = "^(\\-|\\+)?\\d+(\\,|.\\d+)?$";
+
+                                    if (y === ''){
+                                        input.style.background = "";
+                                    }
+                                    else {
+                                        if (!y.match(regex)) {
+                                            input.style.background = "#FE6262";
+                                        } else {
+                                            input.style.background = "#F2F2F2";
+                                        }
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div>
+                            <p>Выберите Y</p>
+                        </div>
+                        <div>
+                        <p:inputText name="yCoord" id="slider" value="#{shot.y}" maxlength="2" required="true" validatorMessage="y должен быть в диапазоне [-4;4]">
+                            <f:validateDoubleRange for="slider" minimum="-4" maximum="4"/>
+                            <f:ajax render="Yerrors" event="keyup" execute="@this"/>
+                        </p:inputText>
+                        <h:outputStylesheet library="css" name="slider.css"/>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div>
+                            <p style="vertical-align: top" >Выберите радиус</p>
+                        </div>
+                        <div style="height: 39px" id="radius">
+                            <h:commandButton value="1" onclick="redraw(1);" styleClass="radius" action="#{shot.setRadius(1)}">
+                                <f:ajax execute="@this" render="beanRadius"/>
+                            </h:commandButton>
+                            <h:commandButton value="2" onclick="redraw(2);" styleClass="radius" action="#{shot.setRadius(2)}">
+                                <f:ajax execute="@this" render="beanRadius"/>
+                            </h:commandButton>
+                            <h:commandButton value="3" onclick="redraw(3);" styleClass="radius" action="#{shot.setRadius(3)}">
+                                <f:ajax execute="@this" render="beanRadius"/>
+                            </h:commandButton>
+                            <h:commandButton value="4" onclick="redraw(4);" styleClass="radius" action="#{shot.setRadius(4)}" >
+                                <f:ajax execute="@this" render="beanRadius"/>
+                            </h:commandButton>
+                            <h:commandButton value="5" onclick="redraw(5);" styleClass="radius" action="#{shot.setRadius(5)}">
+                                <f:ajax execute="@this" render="beanRadius"/>
+                            </h:commandButton>
+                        </div>
+                        <h:inputHidden id="offset" value="#{shot.offset}"/>
+                    </td>
+                </tr>
+
+                <tr style="height: 20px">
+                    <td></td>
+                    <td>
+                        <p:slider styleClass="slider_style" minValue="-4" maxValue="4" step="1" for="slider"/>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                <tr>
+                   <td colspan="3">
+                       <canvas id="canvas" width="400" height="400"/>
+                       <script type='text/javascript'>
+                           canvas.addEventListener("click", function (event){
+                               let x = event.offsetX;
+                               let y = event.offsetY;
+                               let r = document.getElementById("mainForm:beanRadius").value;
+                               let offset = document.getElementById("date").value;
+                               let rect = canvas.getBoundingClientRect();
+                               let clientX = (event.clientX - rect.left - 200) / (side / 3) * k;
+                               let clientY = ((-1) * (event.clientY - rect.top - 200)) / (side / 3) * k;
+                               colorizeDot(ctx, clientX, clientY, r);
+                               ctx.beginPath();
+                               ctx.arc(x,y,4,0,Math.PI*2);
+                               ctx.fill();
+                               ctx.stroke();
+                               ctx.closePath();
+
+                               console.log("Coordinate x: " + clientX + " ",
+                                   "Coordinate y: "+ clientY + " r value = " + r);
+                               check(clientX, clientY);
+
+                               function colorizeDot(ctx,x, y, r){
+                                   if (x >= 0 &amp;&amp; y >= 0){
+                                       if (y &lt;= (-x + r/2)){
+                                           ctx.fillStyle="red";
+                                       }
+                                       else ctx.fillStyle="white";
+                                   }
+                                   else if (x > 0 &amp;&amp; y &lt; 0){
+                                       if (Math.pow(x,2) + Math.pow(y,2) &lt;= Math.pow(r,2)){
+                                           ctx.fillStyle="red";
+                                       }else ctx.fillStyle="white";
+                                   }
+                                   else if (x &lt; 0 &amp;&amp; y > 0){
+                                       if ((y &lt;= (r / 2)) &amp;&amp; (x >= -r)){
+                                           ctx.fillStyle="red";
+                                       }else ctx.fillStyle="white";
+                                   }
+                                   else ctx.fillStyle="white";
+                               }
+
+                               function check(clientX, clientY){
+                                   document.getElementById("graphForm:hiddenX").value = clientX.toFixed(4);
+                                   document.getElementById("graphForm:hiddenY").value = clientY.toFixed(4);
+                                   document.getElementById("graphForm:hiddenR").value = document.getElementById("mainForm:beanRadius").value;
+                                   document.getElementById("graphForm:hiddenOffset").value = offset;
+                                   let btn = document.getElementById("graphForm:hidden-btn");
+                                   btn.click();
+                               }
+                           })
+                       </script>
+                   </td>
+                </tr>
+                <tr>
+                    <p:inputText id="beanRadius" type="hidden" value="#{shot.radius}"/>
+                </tr>
+                <tr>
+                    <td colspan="3" style="justify-content: center; align-content: center; align-items: center">
+                        <h:commandButton value="Выстрелить">
+                            <f:ajax execute="@form" render="result-table-body" listener="#{main.add(shot.x, shot.y, shot.radius, shot.offset)}"/>
+                        </h:commandButton>
+                        <h:commandButton type="reset" value="Сбросить"/>
+                        <h:commandButton value="Очистить таблицу">
+                            <f:ajax render="result-table-body" listener="#{main.clearTable()}"/>
+                        </h:commandButton>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </h:form>
+    </div>
+    <div id="data" class="frame" style="float:left; width: 50%; height: 550px; align-items: center;align-content: center; justify-content: center">
+        <h:dataTable var="hit" value="#{main.list}" id="result-table-body" style="color: white; width: 600px; margin: auto; text-align: center">
+            <h:column>
+                <f:facet name="header">X значение</f:facet>
+                #{hit.x}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Y значение</f:facet>
+                #{hit.y}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Радиус</f:facet>
+                #{hit.radius}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Попадание</f:facet>
+                #{hit.hitted}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Время скрипта</f:facet>
+                #{hit.time} мкс
+            </h:column>
+            <h:column>
+                <f:facet name="header">Время</f:facet>
+                #{hit.stringDate}
+            </h:column>
+
+        </h:dataTable>
+    </div>
+    </div>
+    <br></br>
+    <div style="text-align: center">
+        <a href="index.xhtml">
+            На начальную страницу
+        </a>
+    </div>
+<!--    <h:outputText styleClass="demo" id="beanR" value="Radius is #{shot.radius}; X is #{shot.x}; Y is #{shot.y}"/>-->
+    <h:form id="graphForm">
+        <h:inputHidden id="hiddenX" value="#{shot.x}"/>
+        <h:inputHidden id="hiddenY" value="#{shot.y}"/>
+        <h:inputHidden id="hiddenR" value="#{shot.radius}"/>
+        <h:inputHidden id="hiddenOffset" value="#{shot.offset}"/>
+        <h:commandButton style="display: none;" id="hidden-btn" action="#{main.add(shot.x, shot.y, shot.radius, shot.offset)}">
+            <f:ajax execute="@form" render="result-table-body"/>
+        </h:commandButton>
+    </h:form>
+
+    <div id="divOffset">
+        <h:inputHidden id="date"/>
+    </div>
+
+
+    <h:outputScript library="js" name="drawGraph.js"/>
+    <h:outputScript library="js" name="getOffset.js"/>
+
+    <div>
+        <h:messages id="Yerrors" style="width: 100%; color: red; margin-top: 10px"/>
+        <h:messages id="Xerrors" style="width: 100%; color: red; margin-top: 10px"/>
+    </div>
+</h:body>
+
+
+</html>
