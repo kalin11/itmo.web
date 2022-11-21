@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="web3test:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>web3test</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="web3test-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="web3test:war exploded" />
+    </root>
+  </artifact>
+</component>

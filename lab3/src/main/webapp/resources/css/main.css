@@ -1,0 +1,21 @@
+body{
+    align-items: center;
+    background: #091921;
+}
+html, body{
+    height: 100%;
+}
+h1{
+    text-align: center;
+    color: #5a0191;
+    font-size: 50px;
+    font-family: cursive;
+    height: 15vh;
+}
+
+#myTable{
+    background: #1a4154;
+}
+.demo{
+    color: white;
+}
