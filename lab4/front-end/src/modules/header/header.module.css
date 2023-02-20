@@ -1,0 +1,28 @@
+@media (min-width: 1192px){
+    .myHeader {
+        text-align: center;
+        color: #d496ff;
+        font-size: 40px;
+        font-family: 'PT Sans', sans-serif;
+        height: 35px;
+    }
+}
+
+@media (min-width: 672px){
+    .myHeader {
+        text-align: center;
+        color: #d496ff;
+        font-size: 40px;
+        font-family: 'PT Sans', sans-serif;
+        height: 35px;
+    }
+}
+@media (max-width: 672px){
+    .myHeader {
+        text-align: center;
+        color: #d496ff;
+        font-size: 25px;
+        font-family: 'PT Sans', sans-serif;
+        height: 35px;
+    }
+}

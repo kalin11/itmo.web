@@ -1,0 +1,30 @@
+.xHeader{
+    width: 10%;
+    height: 35px;
+}
+.yHeader{
+    width: 10%;
+}
+.rHeader{
+    width: 10%;
+}
+.result{
+    width: 23.3%;
+}
+.scriptTime{
+    width: 23.3%;
+}
+.hitTime{
+    width: 23.3%;
+}
+.table{
+    width: 100%;
+    text-align: center;
+}
+
+@media (min-width: 692px) {
+    .item{
+        height: 45px;
+    }
+
+}

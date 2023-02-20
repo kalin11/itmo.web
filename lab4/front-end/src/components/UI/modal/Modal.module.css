@@ -1,0 +1,75 @@
+@media (min-width: 672px) and (max-width: 1192px) {
+    .myModel{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        display: none;
+        background: rgba(0,0,0,0.5);
+    }
+
+    .myModelContent{
+        padding: 25px;
+        background: #191934;
+        border-radius: 16px;
+        min-width: 500px;
+        min-height: 500px;
+    }
+
+    .myModel.active{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (min-width: 1192px) {
+    .myModel{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        display: none;
+        background: rgba(0,0,0,0.5);
+    }
+
+    .myModelContent{
+        padding: 25px;
+        background: #191934;
+        border-radius: 16px;
+        min-width: 250px;
+    }
+
+    .myModel.active{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (max-width: 672px) {
+    .myModel{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        display: none;
+        background: rgba(0,0,0,0.5);
+    }
+
+    .myModelContent{
+        padding: 25px;
+        background: #191934;
+        border-radius: 16px;
+        min-width: 250px;
+    }
+
+    .myModel.active{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

@@ -1,0 +1,53 @@
+@media (min-width: 1192px) {
+    .myInput{
+        width: 94%;
+        padding: 2%;
+        margin: 20px 0;
+        display: flex;
+        height: 30px;
+        font-family: 'PT Sans', sans-serif;
+    }
+
+    .myLabel{
+        font-size: 30px;
+        color: white;
+        font-family: 'PT Sans', sans-serif;
+    }
+}
+
+@media (min-width: 672px) {
+    .myInput{
+        width: 94%;
+        padding: 2%;
+        margin: 20px 0;
+        display: flex;
+        height: 30px;
+        font-family: 'PT Sans', sans-serif;
+        font-size: 30px;
+    }
+
+    .myLabel{
+        font-size: 50px;
+        color: white;
+        font-family: 'PT Sans', sans-serif;
+    }
+}
+
+@media (max-width: 672px) {
+    .myInput{
+        width: 94%;
+        padding: 2%;
+        margin: 20px 0;
+        display: flex;
+        height: 20px;
+        font-family: 'PT Sans', sans-serif;
+        font-size: 20px;
+
+    }
+
+    .myLabel{
+        font-size: 25px;
+        color: white;
+        font-family: 'PT Sans', sans-serif;
+    }
+}

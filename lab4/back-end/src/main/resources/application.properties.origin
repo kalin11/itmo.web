@@ -1,0 +1,7 @@
+spring.datasource.url=
+spring.datasource.driver-class-name=
+spring.datasource.username=
+spring.datasource.password=
+
+jwt_secret_word=
+jwt.lifetime.value=
